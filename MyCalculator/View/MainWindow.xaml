@@ -32,10 +32,10 @@
 		</Grid>
 
 		<!--히스토리 토글 영역-->
-		<Grid x:Name="historyGrid" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="6" Visibility="Collapsed">
+        <Grid x:Name="historyGrid" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="6" Background="#F0F0F0" Visibility="Collapsed">
 			<StackPanel>
 				<Label Content="계산 기록"/>
-				<TextBox x:Name="historyTextBox" FontSize="16" BorderThickness="0" TextWrapping="Wrap" Background="#E6E6E6" IsReadOnly="True"/>
+                <TextBox x:Name="historyTextBox" FontSize="16" BorderThickness="0" TextWrapping="Wrap" Background="#F0F0F0" IsReadOnly="True"/>
 			</StackPanel>
 		</Grid>
 
