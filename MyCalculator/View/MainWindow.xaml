@@ -21,7 +21,7 @@
 
 			<Grid Grid.Row="0">
 				<Label Content="표준" FontSize="20" HorizontalAlignment="Left"/>
-				<Button Content="▤" HorizontalAlignment="Right" BorderThickness="0" FontSize="20" Background="#E6E6E6"/>
+				<Button Content="▤" HorizontalAlignment="Right" BorderThickness="0" FontSize="20" Background="#E6E6E6" Click="HistoryButtonClick"/>
 			</Grid>
 			<Grid Grid.Row="1">
 				<TextBlock Text="test" FontSize="16" FontWeight="Light" TextAlignment="Right" VerticalAlignment="Bottom" Margin="10"/>
