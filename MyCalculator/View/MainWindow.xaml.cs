@@ -20,9 +20,32 @@ namespace MyCalculator
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool isHistoryVisible = false;
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void ToggleHistoryVisibility()
+        {
+            if (isHistoryVisible)
+            {
+                historyGrid.Visibility = Visibility.Collapsed;
+                keyPadGrid.Visibility = Visibility.Visible;
+                isHistoryVisible = false;
+            }
+            else
+            {
+                historyGrid.Visibility = Visibility.Visible;
+                keyPadGrid.Visibility = Visibility.Collapsed;
+                isHistoryVisible = true;
+            }
+        }
+
+        private void HistoryButtonClick(object sender, RoutedEventArgs e)
+        {
+            // 히스토리 표시창 토글
+            ToggleHistoryVisibility();
         }
     }
 }
