@@ -9,7 +9,7 @@ namespace MyCalculator.ViewModel
 {
     class CalculatorViewModel
     {
-        private bool inputChageAfterEnterOperator = false;
+        private bool enterOperator = false;
         private CalculatorResultModel calResultModel;
         private CalculatorExpression calExpression;
         public CalculatorResultModel CalResultModel
@@ -75,17 +75,10 @@ namespace MyCalculator.ViewModel
 
         private void EnterOperator(string inputData)
         {
-            if (inputChageAfterEnterOperator)
-            {
+            calExpression.FirstTerm = calResultModel.CalResult;
+            calExpression.Oper = inputData;
 
-            }
-            else
-            {
-                calExpression.FirstTerm = calResultModel.CalResult;
-                calExpression.Oper = inputData;
-            }
-
-            inputChageAfterEnterOperator = false;
+            enterOperator = true;
         }
 
         private void SignChange()
@@ -132,12 +125,13 @@ namespace MyCalculator.ViewModel
             if (target.Contains(".") && inputData.Equals(".")) 
                 return;
 
-            if (string.Equals(target, "0") || inputChageAfterEnterOperator == false) 
+            if (string.Equals(target, "0") || enterOperator)
+            {
+                if (enterOperator) enterOperator = false;
                 calResultModel.CalResult = $"{inputData}";
-            else
+            }
+            else 
                 calResultModel.CalResult = $"{calResultModel.CalResult}{inputData}";
-
-            if(inputChageAfterEnterOperator == false) inputChageAfterEnterOperator = true;
         }
     }
 }
