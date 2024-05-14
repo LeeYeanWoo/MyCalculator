@@ -24,8 +24,16 @@
 				<Button Content="▤" HorizontalAlignment="Right" BorderThickness="0" FontSize="20" Background="#E6E6E6" Click="HistoryButtonClick"/>
 			</Grid>
 			<Grid Grid.Row="1">
-                <TextBlock Text="{Binding CalExpression.CalExpression}" FontSize="16" FontWeight="Light" TextAlignment="Right" VerticalAlignment="Bottom" Margin="10"/>
-			</Grid>
+                <TextBlock FontSize="16" FontWeight="Light" TextAlignment="Right" VerticalAlignment="Bottom" Margin="10">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0}{1}{2}">
+                            <Binding Path="CalExpression.FirstTerm.StrName"/>
+                            <Binding Path="CalExpression.Oper"/>
+                            <Binding Path="CalExpression.SecondTerm.StrName"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </Grid>
 			<Grid Grid.Row="2">
                 <TextBlock Text="{Binding CalResultModel.CalResult}" FontSize="20" FontWeight="Bold" Background="#E6E6E6" TextAlignment="Right" Margin="10"/>
 			</Grid>

@@ -12,9 +12,11 @@ namespace MyCalculator.Model
         public event PropertyChangedEventHandler PropertyChanged;
 
         private string calExpression = "";
-        private string firstTerm = "";
+        private CalculatorTerm firstTerm;
+        //private string firstTerm = "";
         private string oper = "";
-        private string secondTerm = "";
+        //private string secondTerm = "";
+        private CalculatorTerm secondTerm;
 
         public string CalExpression
         {
@@ -26,14 +28,14 @@ namespace MyCalculator.Model
             }
         }
 
-        public string FirstTerm
+        public CalculatorTerm FirstTerm
         {
             get { return firstTerm; }
             set
             {
                 firstTerm = value;
-                CalExpression = $"{firstTerm} {oper} {secondTerm}";
-                OnPropertyChanged("CalExpression");
+                CalExpression = $"{firstTerm.StrName} {oper} {secondTerm.StrName}";
+                OnPropertyChanged("FirstTerm");
             }
         }
 
@@ -43,20 +45,26 @@ namespace MyCalculator.Model
             set
             {
                 oper = value;
-                CalExpression = $"{firstTerm} {oper} {secondTerm}";
-                OnPropertyChanged("CalExpression");
+                CalExpression = $"{firstTerm.StrName} {oper} {secondTerm.StrName}";
+                OnPropertyChanged("Oper");
             }
         }
 
-        public string SecondTerm
+        public CalculatorTerm SecondTerm
         {
             get { return secondTerm; }
             set
             {
                 secondTerm = value;
-                CalExpression = $"{firstTerm} {oper} {secondTerm}";
-                OnPropertyChanged("CalExpression");
+                CalExpression = $"{firstTerm.StrName} {oper} {secondTerm.StrName}";
+                OnPropertyChanged("SecondTerm");
             }
+        }
+
+        public CalculatorExpression()
+        {
+            firstTerm = new CalculatorTerm();
+            secondTerm = new CalculatorTerm();
         }
 
         protected void OnPropertyChanged(String propertyName)

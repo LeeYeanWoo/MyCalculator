@@ -69,14 +69,69 @@ namespace MyCalculator.ViewModel
                     SignChange();
                     break;
                 case "=":
+                    Calculate();
                     break;
+            }
+        }
+
+        private void Calculate()
+        {
+            if (calExpression.Oper.Length < 1) return;
+
+            calExpression.SecondTerm.StrName = $"{calResultModel.CalResult} = ";
+            try
+            {
+                calExpression.SecondTerm.RealNum = double.Parse(calResultModel.CalResult);
+            }
+            catch (FormatException)
+            {
+                ClearData();
+                calResultModel.CalResult = "계산할 수 없습니다.";
+            }
+
+            switch (calExpression.Oper)
+            {
+                case "÷":
+                    try
+                    {
+                        calResultModel.CalResult = calExpression.FirstTerm / calExpression.SecondTerm;
+                    }
+                    catch (DivideByZeroException)
+                    {
+                        ClearData();
+                        calResultModel.CalResult = "계산할 수 없습니다.";
+                    }
+                    break;
+                case "×":
+                    calResultModel.CalResult = calExpression.FirstTerm * calExpression.SecondTerm;
+                    break;
+                case "-":
+                    calResultModel.CalResult = calExpression.FirstTerm - calExpression.SecondTerm;
+                    break;
+                case "+":
+                    calResultModel.CalResult = calExpression.FirstTerm + calExpression.SecondTerm;
+                    break;
+                default:
+                    return;
             }
         }
 
         private void EnterOperator(string inputData)
         {
-            calExpression.FirstTerm = calResultModel.CalResult;
+            calExpression.FirstTerm.StrName = calResultModel.CalResult;
+            try
+            {
+                calExpression.FirstTerm.RealNum = double.Parse(calResultModel.CalResult);
+            }
+            catch (FormatException)
+            {
+                ClearData();
+                calResultModel.CalResult = "계산할 수 없습니다.";
+            }
+            
             calExpression.Oper = inputData;
+
+            calExpression.SecondTerm.StrName = "";
 
             enterOperator = true;
         }
@@ -112,9 +167,9 @@ namespace MyCalculator.ViewModel
         private void ClearData()
         {
             calResultModel.CalResult = "0";
-            calExpression.FirstTerm = "";
+            calExpression.FirstTerm.Clear();
             calExpression.Oper = "";
-            calExpression.SecondTerm = "";
+            calExpression.SecondTerm.Clear();
         }
 
         private void EnterNumber(string inputData)

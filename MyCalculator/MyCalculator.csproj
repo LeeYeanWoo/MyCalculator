@@ -67,6 +67,7 @@
     <Compile Include="Model\CalculatorExpression.cs" />
     <Compile Include="Model\CalculatorExpressionParser.cs" />
     <Compile Include="Model\CalculatorResultModel.cs" />
+    <Compile Include="Model\CalculatorTerm.cs" />
     <Compile Include="ViewModel\CalculatorViewModel.cs" />
     <Compile Include="View\Calculator.xaml.cs">
       <DependentUpon>Calculator.xaml</DependentUpon>
