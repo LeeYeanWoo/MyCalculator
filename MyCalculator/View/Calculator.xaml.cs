@@ -28,6 +28,7 @@ namespace MyCalculator
             InitializeComponent();
             calculatorViewModel = new CalculatorViewModel();
             DataContext = calculatorViewModel;
+            HistoryListBox.ItemsSource = calculatorViewModel.GetHistoryItemsSource();
         }
 
         private void ToggleHistoryVisibility()
@@ -43,6 +44,8 @@ namespace MyCalculator
                 historyGrid.Visibility = Visibility.Visible;
                 keyPadGrid.Visibility = Visibility.Collapsed;
                 isHistoryVisible = true;
+                HistoryListBox.SelectedIndex = HistoryListBox.Items.Count - 1;
+                HistoryListBox.ScrollIntoView(HistoryListBox.SelectedItem);
             }
         }
         private void HistoryButtonClick(object sender, RoutedEventArgs e)
@@ -55,6 +58,8 @@ namespace MyCalculator
         {
             Button btn = sender as Button;
             calculatorViewModel.UserInput(btn.Content.ToString());
+
+            FocusManager.SetFocusedElement(this, this);
         }
 
         private void KeyDownEvent(object sender, KeyEventArgs e)

@@ -1,0 +1,2 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(79,3): error : .NET SDK를 찾을 수 없습니다. 이 SDK가 설치되어 있고 global.json에 지정된 버전(있는 경우)이 설치된 버전과 일치하는지 확인하세요.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(79,11): error MSB4236: 지정된 'Microsoft.NET.Sdk' SDK를 찾을 수 없습니다.

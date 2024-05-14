@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CRLArithmetic">
+      <HintPath>..\Debug\CRLArithmetic.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -65,7 +68,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\CalculatorExpression.cs" />
-    <Compile Include="Model\CalculatorExpressionParser.cs" />
+    <Compile Include="Model\CalculatorHistory.cs" />
     <Compile Include="Model\CalculatorResultModel.cs" />
     <Compile Include="Model\CalculatorTerm.cs" />
     <Compile Include="ViewModel\CalculatorViewModel.cs" />

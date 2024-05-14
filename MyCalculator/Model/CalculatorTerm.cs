@@ -42,19 +42,19 @@ namespace MyCalculator.Model
         public static string operator +(CalculatorTerm firstTerm, CalculatorTerm secondTerm)
         {
             double calResult = firstTerm.RealNum + secondTerm.RealNum;
-            return $"{calResult:#.#########}";
+            return $"{calResult:0.#########}";
         }
 
         public static string operator -(CalculatorTerm firstTerm, CalculatorTerm secondTerm)
         {
             double calResult = firstTerm.RealNum - secondTerm.RealNum;
-            return $"{calResult:#.#########}";
+            return $"{calResult:0.#########}";
         }
 
         public static string operator *(CalculatorTerm firstTerm, CalculatorTerm secondTerm)
         {
             double calResult = firstTerm.RealNum * secondTerm.RealNum;
-            return $"{calResult:#.#########}";
+            return $"{calResult:0.#########}";
         }
 
         public static string operator /(CalculatorTerm firstTerm, CalculatorTerm secondTerm)
@@ -62,7 +62,7 @@ namespace MyCalculator.Model
            if(secondTerm.RealNum != 0)
             {
                 double calResult = firstTerm.RealNum / secondTerm.RealNum;
-                return $"{calResult:#.#########}";
+                return $"{calResult:0.#########}";
             }
             throw new DivideByZeroException();
         }

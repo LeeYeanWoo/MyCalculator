@@ -41,11 +41,25 @@
 
 		<!--히스토리 토글 영역-->
         <Grid x:Name="historyGrid" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="6" Background="#F0F0F0" Visibility="Collapsed">
-			<StackPanel>
-				<Label Content="계산 기록"/>
-                <TextBox x:Name="historyTextBox" FontSize="16" BorderThickness="0" TextWrapping="Wrap" Background="#F0F0F0" IsReadOnly="True"/>
-			</StackPanel>
-		</Grid>
+            <ListBox x:Name="HistoryListBox" Background="#F0F0F0" HorizontalContentAlignment="Right">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="2*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <TextBlock Text="{Binding Expression}" FontSize="16" FontWeight="Light" Background="#F0F0F0" TextAlignment="Right" VerticalAlignment="Bottom" Margin="10"/>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <TextBlock Text="{Binding Answer}" FontSize="20" FontWeight="Bold" Background="#F0F0F0" TextAlignment="Right" Margin="10"/>
+                            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
 
 		<!--키패드 토글 영역-->
 		<Grid x:Name="keyPadGrid" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="6" Visibility="Visible">

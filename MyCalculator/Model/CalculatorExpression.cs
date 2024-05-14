@@ -13,9 +13,7 @@ namespace MyCalculator.Model
 
         private string calExpression = "";
         private CalculatorTerm firstTerm;
-        //private string firstTerm = "";
         private string oper = "";
-        //private string secondTerm = "";
         private CalculatorTerm secondTerm;
 
         public string CalExpression

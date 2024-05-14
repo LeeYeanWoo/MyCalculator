@@ -28,3 +28,6 @@ C:\Users\ywlee\Documents\GitHub\MyCalculator\MyCalculator\obj\Debug\MyCalculator
 C:\Users\ywlee\Documents\GitHub\MyCalculator\MyCalculator\obj\Debug\MyCalculator.pdb
 C:\Users\ywlee\Documents\GitHub\MyCalculator\MyCalculator\obj\Debug\View\Calculator.g.cs
 C:\Users\ywlee\Documents\GitHub\MyCalculator\MyCalculator\obj\Debug\View\Calculator.baml
+C:\Users\ywlee\Documents\GitHub\MyCalculator\MyCalculator\bin\Debug\CRLArithmetic.dll
+C:\Users\ywlee\Documents\GitHub\MyCalculator\MyCalculator\bin\Debug\CRLArithmetic.pdb
+C:\Users\ywlee\Documents\GitHub\MyCalculator\MyCalculator\obj\Debug\MyCalculator.csproj.CopyComplete
