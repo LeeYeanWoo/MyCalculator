@@ -52,6 +52,8 @@ namespace MyCalculator
         {
             // 히스토리 표시창 토글
             ToggleHistoryVisibility();
+
+            FocusManager.SetFocusedElement(this, this);
         }
 
         private void KeyPadButtonClick(object sender, RoutedEventArgs e)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace MyCalculator.Model
         private string expression;
         private string answer;
 
-        private static List<CalculatorHistory> instance;
+        private static ObservableCollection<CalculatorHistory> instance;
 
         public string Expression
         {
@@ -35,10 +36,10 @@ namespace MyCalculator.Model
             }
         }
 
-        public static List<CalculatorHistory> GetInstance()
+        public static ObservableCollection<CalculatorHistory> GetInstance()
         {
             if (instance == null)
-                instance = new List<CalculatorHistory>();
+                instance = new ObservableCollection<CalculatorHistory>();
 
             return instance;
         }

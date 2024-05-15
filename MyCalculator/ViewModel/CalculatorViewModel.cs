@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CRLArithmetic;
+using System.Collections.ObjectModel;
 
 namespace MyCalculator.ViewModel
 {
@@ -80,7 +81,7 @@ namespace MyCalculator.ViewModel
             }
         }
 
-        public List<CalculatorHistory> GetHistoryItemsSource()
+        public ObservableCollection<CalculatorHistory> GetHistoryItemsSource()
         {
             return CalculatorHistory.GetInstance();
         }
