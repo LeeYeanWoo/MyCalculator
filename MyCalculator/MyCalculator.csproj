@@ -67,10 +67,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Model\BaseCalculator.cs" />
     <Compile Include="Model\CalculatorExpression.cs" />
     <Compile Include="Model\CalculatorHistory.cs" />
-    <Compile Include="Model\CalculatorResultModel.cs" />
+    <Compile Include="Model\CalculatorResult.cs" />
     <Compile Include="Model\CalculatorTerm.cs" />
+    <Compile Include="Model\ExtendCalculator.cs" />
     <Compile Include="ViewModel\CalculatorViewModel.cs" />
     <Compile Include="View\Calculator.xaml.cs">
       <DependentUpon>Calculator.xaml</DependentUpon>
@@ -95,6 +97,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

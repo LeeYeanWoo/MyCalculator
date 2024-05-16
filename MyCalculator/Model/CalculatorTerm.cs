@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyCalculator.Model
 {
-    class CalculatorTerm : INotifyPropertyChanged
+    public class CalculatorTerm : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -16,9 +16,6 @@ using System.Windows.Shapes;
 
 namespace MyCalculator
 {
-    /// <summary>
-    /// MainWindow.xaml에 대한 상호 작용 논리
-    /// </summary>
     public partial class Calculator : Window
     {
         private CalculatorViewModel calculatorViewModel;
@@ -48,14 +45,16 @@ namespace MyCalculator
                 HistoryListBox.ScrollIntoView(HistoryListBox.SelectedItem);
             }
         }
+
+        // 주의 : 버튼 클릭 후 포커스를 윈도우로 바꿔주지 않으면 엔터 입력시 이전 버튼 클릭 이벤트 발생
         private void HistoryButtonClick(object sender, RoutedEventArgs e)
         {
-            // 히스토리 표시창 토글
             ToggleHistoryVisibility();
 
             FocusManager.SetFocusedElement(this, this);
         }
 
+        // 주의 : 버튼 클릭 후 포커스를 윈도우로 바꿔주지 않으면 엔터 입력시 이전 버튼 클릭 이벤트 발생
         private void KeyPadButtonClick(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
@@ -68,7 +67,22 @@ namespace MyCalculator
         {
             string userCMD = "";
 
-            if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
+            if((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            {
+                switch (e.Key)
+                {
+                    case Key.C:
+                        userCMD = "Copy";
+                        break;
+                    case Key.V:
+                        userCMD = "Paste";
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            else if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
             {
                 switch (e.Key)
                 {

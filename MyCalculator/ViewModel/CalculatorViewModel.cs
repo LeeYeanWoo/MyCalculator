@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CRLArithmetic;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace MyCalculator.ViewModel
 {
@@ -13,14 +13,14 @@ namespace MyCalculator.ViewModel
     {
         private bool enterOperator = false;
         private bool finishCalculate = false;
-        private CalculatorResultModel calResultModel;
+        private CalculatorResult calResult;
         private CalculatorExpression calExpression;
-        private Arithmetic arithmetic;
+        private ExtendCalculator myCalculator;
 
-        public CalculatorResultModel CalResultModel
+        public CalculatorResult CalResult
         {
-            get { return calResultModel; }
-            set { calResultModel = value; }
+            get { return calResult; }
+            set { calResult = value; }
         }
 
         public CalculatorExpression CalExpression
@@ -31,9 +31,9 @@ namespace MyCalculator.ViewModel
 
         public CalculatorViewModel()
         {
-            calResultModel = new();
+            calResult = new();
             calExpression = new();
-            arithmetic = new CRLArithmetic.Arithmetic();
+            myCalculator = new();
         }
 
         public void UserInput(string inputData)
@@ -78,19 +78,51 @@ namespace MyCalculator.ViewModel
                 case "=":
                     Calculate();
                     break;
+                case "Copy":
+                    Copy();
+                    break;
+                case "Paste":
+                    Paste();
+                    break;
+                default:
+                    break;
             }
         }
-
         public ObservableCollection<CalculatorHistory> GetHistoryItemsSource()
         {
             return CalculatorHistory.GetInstance();
         }
 
+        private void Paste()
+        {
+            string ClipboardData = Clipboard.GetText();
+            try
+            {
+                _ = double.Parse(ClipboardData);
+                calResult.CalResult = ClipboardData;
+            }
+            catch (FormatException)
+            {
+                ClearData();
+                calResult.CalResult = "잘못된 입력입니다.";
+            }
+
+        }
+
+        private void Copy()
+        {
+            Clipboard.SetText(calResult.CalResult);
+        }
+
+        /*
+            주의 : 첫 항만 있을때의 단항 연산과 두 번째 항까지 있을때의 단항 연산에 주의
+            두 번째 항까지 있을때의 단항 연산은 단항 연산을 먼저 수행 후 다항 연산 실행
+         */
         private void UnaryOperator(string inputData)
         {
             if(calExpression.Oper.Length < 1 || finishCalculate)
             {
-                UpdateDataFirstTerm(calResultModel.CalResult);
+                UpdateDataFirstTerm(calResult.CalResult);
                 calExpression.Oper = "";
                 calExpression.SecondTerm.Clear();
 
@@ -99,15 +131,15 @@ namespace MyCalculator.ViewModel
                     case "%":
                         break;
                     case "√":
-                        calResultModel.CalResult = $"{arithmetic.Root(calExpression.FirstTerm.RealNum)}";
+                        calResult.CalResult = $"{myCalculator.Root(calExpression.FirstTerm)}";
                         UpdateDataFirstTerm($"√{calExpression.FirstTerm.RealNum}");
                         break;
                     case "x²":
-                        calResultModel.CalResult = $"{arithmetic.DoubleSquare(calExpression.FirstTerm.RealNum)}";
+                        calResult.CalResult = $"{myCalculator.DoubleSquare(calExpression.FirstTerm)}";
                         UpdateDataFirstTerm($"({calExpression.FirstTerm.RealNum})²");
                         break;
                     case "1/x":
-                        calResultModel.CalResult = $"{arithmetic.OneInNum(calExpression.FirstTerm.RealNum)}";
+                        calResult.CalResult = $"{myCalculator.OneInNum(calExpression.FirstTerm)}";
                         UpdateDataFirstTerm($"1/({calExpression.FirstTerm.RealNum})");
                         break;
                     default:
@@ -116,23 +148,23 @@ namespace MyCalculator.ViewModel
             }
             else
             {
-                UpdateDataSecondTerm(calResultModel.CalResult);
+                UpdateDataSecondTerm(calResult.CalResult);
                 switch (inputData)
                 {
                     case "%":
-                        calResultModel.CalResult = $"{arithmetic.Percenatage(calExpression.FirstTerm.RealNum, calExpression.SecondTerm.RealNum)}";
-                        UpdateDataSecondTerm(calResultModel.CalResult);
+                        calResult.CalResult = $"{myCalculator.Percenatage(calExpression.FirstTerm, calExpression.SecondTerm)}";
+                        UpdateDataSecondTerm(calResult.CalResult);
                         break;
                     case "√":
-                        calResultModel.CalResult = $"{arithmetic.Root(calExpression.SecondTerm.RealNum)}";
+                        calResult.CalResult = $"{myCalculator.Root(calExpression.SecondTerm)}";
                         UpdateDataSecondTerm($"√{calExpression.SecondTerm.RealNum}");
                         break;
                     case "x²":
-                        calResultModel.CalResult = $"{arithmetic.DoubleSquare(calExpression.SecondTerm.RealNum)}";
+                        calResult.CalResult = $"{myCalculator.DoubleSquare(calExpression.SecondTerm)}";
                         UpdateDataSecondTerm($"({calExpression.SecondTerm.RealNum})²");
                         break;
                     case "1/x":
-                        calResultModel.CalResult = $"{arithmetic.OneInNum(calExpression.SecondTerm.RealNum)}";
+                        calResult.CalResult = $"{myCalculator.OneInNum(calExpression.SecondTerm)}";
                         UpdateDataSecondTerm($"1/({calExpression.SecondTerm.RealNum})");
                         break;
                     default:
@@ -153,29 +185,29 @@ namespace MyCalculator.ViewModel
             if(calExpression.SecondTerm.StrName.Length > 0)
                 UpdateDataSecondTerm($"{calExpression.SecondTerm.StrName} =");
             else
-                UpdateDataSecondTerm($"{calResultModel.CalResult} =");
+                UpdateDataSecondTerm($"{calResult.CalResult} =");
 
             switch (calExpression.Oper)
             {
                 case "÷":
                     try
                     {
-                        calResultModel.CalResult = calExpression.FirstTerm / calExpression.SecondTerm;
+                        calResult.CalResult = myCalculator.Divide(calExpression.FirstTerm, calExpression.SecondTerm);
                     }
                     catch (DivideByZeroException)
                     {
                         ClearData();
-                        calResultModel.CalResult = "계산할 수 없습니다.";
+                        calResult.CalResult = "계산할 수 없습니다.";
                     }
                     break;
                 case "×":
-                    calResultModel.CalResult = calExpression.FirstTerm * calExpression.SecondTerm;
+                    calResult.CalResult = myCalculator.Multiply(calExpression.FirstTerm, calExpression.SecondTerm);
                     break;
                 case "-":
-                    calResultModel.CalResult = calExpression.FirstTerm - calExpression.SecondTerm;
+                    calResult.CalResult = myCalculator.Sub(calExpression.FirstTerm, calExpression.SecondTerm);
                     break;
                 case "+":
-                    calResultModel.CalResult = calExpression.FirstTerm + calExpression.SecondTerm;
+                    calResult.CalResult = myCalculator.Sum(calExpression.FirstTerm, calExpression.SecondTerm);
                     break;
                 default:
                     return;
@@ -190,12 +222,12 @@ namespace MyCalculator.ViewModel
             CalculatorHistory.GetInstance()
                 .Add(new CalculatorHistory() 
                 { Expression = $"{calExpression.FirstTerm.StrName} {calExpression.Oper} {calExpression.SecondTerm.StrName}"
-                , Answer = $"{calResultModel.CalResult}" });
+                , Answer = $"{calResult.CalResult}" });
         }
 
         private void EnterOperator(string inputData)
         {
-            UpdateDataFirstTerm(calResultModel.CalResult);
+            UpdateDataFirstTerm(calResult.CalResult);
             
             calExpression.Oper = inputData;
 
@@ -207,40 +239,41 @@ namespace MyCalculator.ViewModel
 
         private void SignChange()
         {
-            string target = calResultModel.CalResult;
+            string target = calResult.CalResult;
 
             if (target.Equals("0")) return;
 
             if (target.ElementAt(0) == '-')
             {
-                calResultModel.CalResult = target.Substring(1);
+                calResult.CalResult = target.Substring(1);
             }
             else
             {
-                calResultModel.CalResult = $"-{target}";
+                calResult.CalResult = $"-{target}";
             }
         }
 
         private void DeleteNumber()
         {
-            string target = calResultModel.CalResult;
+            string target = calResult.CalResult;
 
             if (target.Length <= 1)
-                calResultModel.CalResult = "0";
+                calResult.CalResult = "0";
             else
             {
-                calResultModel.CalResult = target.Substring(0, target.Length - 1);
+                calResult.CalResult = target.Substring(0, target.Length - 1);
             }
         }
 
         private void ClearData()
         {
-            calResultModel.CalResult = "0";
+            calResult.CalResult = "0";
             calExpression.FirstTerm.Clear();
             calExpression.Oper = "";
             calExpression.SecondTerm.Clear();
         }
 
+        //주의 : 이미 소수점이 있는데 또다시 . 명령어가 들어오면 무시한다.
         private void EnterNumber(string inputData)
         {
             if (finishCalculate)
@@ -249,19 +282,18 @@ namespace MyCalculator.ViewModel
                 finishCalculate = false;
             }
 
-            string target = calResultModel.CalResult;
+            string target = calResult.CalResult;
 
-            //이미 소수점이 있는데 또다시 . 명령어가 들어오면 무시한다.
             if (target.Contains(".") && inputData.Equals(".")) 
                 return;
 
             if (string.Equals(target, "0") || enterOperator)
             {
                 if (enterOperator) enterOperator = false;
-                calResultModel.CalResult = $"{inputData}";
+                calResult.CalResult = $"{inputData}";
             }
             else 
-                calResultModel.CalResult = $"{calResultModel.CalResult}{inputData}";
+                calResult.CalResult = $"{calResult.CalResult}{inputData}";
         }
 
         private void UpdateDataFirstTerm(string termName)
@@ -269,12 +301,12 @@ namespace MyCalculator.ViewModel
             calExpression.FirstTerm.StrName = termName;
             try
             {
-                calExpression.FirstTerm.RealNum = double.Parse(calResultModel.CalResult);
+                calExpression.FirstTerm.RealNum = double.Parse(calResult.CalResult);
             }
             catch (FormatException)
             {
                 ClearData();
-                calResultModel.CalResult = "계산할 수 없습니다.";
+                calResult.CalResult = "계산할 수 없습니다.";
             }
         }
 
@@ -283,12 +315,12 @@ namespace MyCalculator.ViewModel
             calExpression.SecondTerm.StrName = termName;
             try
             {
-                calExpression.SecondTerm.RealNum = double.Parse(calResultModel.CalResult);
+                calExpression.SecondTerm.RealNum = double.Parse(calResult.CalResult);
             }
             catch (FormatException)
             {
                 ClearData();
-                calResultModel.CalResult = "계산할 수 없습니다.";
+                calResult.CalResult = "계산할 수 없습니다.";
             }
         }
     }

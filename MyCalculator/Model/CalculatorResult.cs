@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace MyCalculator.Model
 {
-    public class CalculatorResultModel : INotifyPropertyChanged
+    public class CalculatorResult : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
             
         private string calResult = "0";
-        public string CalResult 
+        public string CalResult
         {
             get { return calResult; }
             set
